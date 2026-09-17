@@ -1,0 +1,332 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+   Light theme (default) — clean workshop SaaS: soft grey shell, white cards,
+   deep navy sidebar, violet accent. High contrast, low visual noise.
+--------------------------------------------------------------------------- */
+:root {
+  --color-shell: #e9e9ef;
+  --color-canvas: #f7f8fc;
+  --color-panel: #ffffff;
+  --color-panel-sunken: #f4f5fa;
+  --color-panel-raised: #eceef7;
+  --color-border: #ebecf3;
+  --color-border-strong: #d8dae6;
+  --color-ink: #16163a;
+  --color-ink-soft: #6a6a85;
+  --color-ink-faint: #9b9bb2;
+
+  /* Sidebar stays deep navy in both themes — it is the signature of the shell. */
+  --color-nav: #16163c;
+  --color-nav-raised: #21214f;
+  --color-nav-ink: #ffffff;
+  --color-nav-ink-soft: #a9a9c9;
+
+  /* Primary accent — violet */
+  --color-accent: #6d55f5;
+  --color-accent-strong: #5a41e8;
+  --color-accent-ink: #5a41e8;
+  --color-accent-bg: #efecfe;
+  --color-accent-border: #c9bffb;
+  --color-accent-contrast: #ffffff;
+
+  /* Semantic: Offer Draft / ready — green */
+  --color-ready: #0f9d63;
+  --color-ready-ink: #0f9d63;
+  --color-ready-bg: #e8f8f1;
+  --color-ready-border: #a9e3c9;
+
+  /* Semantic: Review Task + urgency — amber */
+  --color-review: #d98514;
+  --color-review-ink: #b26a08;
+  --color-review-bg: #fdf3e3;
+  --color-review-border: #f3d3a0;
+
+  /* Semantic: No Action — neutral slate */
+  --color-noaction: #7d7d96;
+  --color-noaction-bg: #f2f3f8;
+  --color-noaction-border: #dedfeb;
+
+  /* Semantic: rejected / failed only */
+  --color-danger: #e0484d;
+  --color-danger-ink: #c8393e;
+  --color-danger-bg: #fdecec;
+  --color-danger-border: #f6bcbe;
+
+  /* Channels */
+  --color-whatsapp: #25d366;
+  --color-whatsapp-bubble: #e7f9d9;
+  --color-sms: #64748b;
+  --color-sms-bubble: #f1f3f9;
+
+  /* Demo zone — hazard amber, deliberately unlike the real workflow */
+  --color-demo-bg: #fff8ea;
+  --color-demo-border: #eaa83c;
+  --color-demo-ink: #9a6410;
+
+  /* Illustrative / placeholder-data tag */
+  --color-illustrative-bg: #fff8ea;
+  --color-illustrative-border: #eaa83c;
+  --color-illustrative-ink: #9a6410;
+
+  --shadow-card: 0 1px 2px rgba(22, 22, 58, 0.04), 0 8px 24px rgba(22, 22, 58, 0.05);
+  --shadow-pop: 0 12px 48px rgba(22, 22, 58, 0.18);
+
+  /* Urgency chip gradient (amber -> red); hue computed in JS, tone theme-aware. */
+  --urgency-bg-s: 85%;
+  --urgency-bg-l: 95%;
+  --urgency-border-s: 70%;
+  --urgency-border-l: 80%;
+  --urgency-text-s: 65%;
+  --urgency-text-l: 42%;
+  --urgency-dot-s: 78%;
+  --urgency-dot-l: 55%;
+}
+
+/* ---------------------------------------------------------------------------
+   Dark theme — same layout language, charcoal/indigo surfaces.
+--------------------------------------------------------------------------- */
+:root[data-theme="dark"] {
+  --color-shell: #0a0a1c;
+  --color-canvas: #101028;
+  --color-panel: #17173a;
+  --color-panel-sunken: #13132f;
+  --color-panel-raised: #1f1f4a;
+  --color-border: #262551;
+  --color-border-strong: #383774;
+  --color-ink: #eef0fb;
+  --color-ink-soft: #a5a6c8;
+  --color-ink-faint: #6f6f97;
+
+  --color-nav: #0b0b22;
+  --color-nav-raised: #1b1b44;
+  --color-nav-ink: #ffffff;
+  --color-nav-ink-soft: #9a9ac0;
+
+  --color-accent: #7d67ff;
+  --color-accent-strong: #6d55f5;
+  --color-accent-ink: #b1a3ff;
+  --color-accent-bg: #211c53;
+  --color-accent-border: #43389a;
+  --color-accent-contrast: #ffffff;
+
+  --color-ready: #2fc98a;
+  --color-ready-ink: #5fe0ab;
+  --color-ready-bg: #10301f;
+  --color-ready-border: #1e6b45;
+
+  --color-review: #f0a63c;
+  --color-review-ink: #f7c277;
+  --color-review-bg: #2e2110;
+  --color-review-border: #7a5313;
+
+  --color-noaction: #8f90b3;
+  --color-noaction-bg: #1b1b3f;
+  --color-noaction-border: #2f2f5f;
+
+  --color-danger: #ff7275;
+  --color-danger-ink: #ff9b9d;
+  --color-danger-bg: #3a1618;
+  --color-danger-border: #7e2a2d;
+
+  --color-whatsapp: #25d366;
+  --color-whatsapp-bubble: #12402f;
+  --color-sms: #9aa5bd;
+  --color-sms-bubble: #1c1c40;
+
+  --color-demo-bg: #2a1f08;
+  --color-demo-border: #d0912c;
+  --color-demo-ink: #f3c274;
+
+  --color-illustrative-bg: #2a1f08;
+  --color-illustrative-border: #7a5313;
+  --color-illustrative-ink: #f3c274;
+
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+  --shadow-pop: 0 12px 48px rgba(0, 0, 0, 0.55);
+
+  --urgency-bg-s: 45%;
+  --urgency-bg-l: 16%;
+  --urgency-border-s: 55%;
+  --urgency-border-l: 38%;
+  --urgency-text-s: 85%;
+  --urgency-text-l: 72%;
+  --urgency-dot-s: 85%;
+  --urgency-dot-l: 55%;
+}
+
+@theme inline {
+  --color-canvas: var(--color-canvas);
+  --color-panel: var(--color-panel);
+  --font-sans: var(--font-jakarta);
+  --font-mono: var(--font-geist-mono);
+}
+
+body {
+  background: var(--color-shell);
+  color: var(--color-ink);
+  font-family: var(--font-jakarta), system-ui, -apple-system, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+::selection {
+  background: var(--color-accent-bg);
+  color: var(--color-accent-ink);
+}
+
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* --------------------------------- motion -------------------------------- */
+
+@keyframes tyre-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.94) translateY(8px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes inject-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--color-accent-border);
+  }
+  70% {
+    box-shadow: 0 0 0 10px transparent;
+  }
+  100% {
+    box-shadow: 0 0 0 0 transparent;
+  }
+}
+
+@keyframes bar-grow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.tyre-spin {
+  display: inline-block;
+  animation: tyre-spin 1.6s linear infinite;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-pop {
+  animation: pop-in 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.animate-overlay {
+  animation: overlay-in 0.16s ease-out both;
+}
+
+.animate-slide-down {
+  animation: slide-down 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.inject-pulse {
+  animation: inject-pulse 1.3s ease-out 2;
+}
+
+/* Approve slides the row out to the right (→ Resolved), reject to the left
+   (→ Rejected). Timing matches EXIT_MS in lib/store.tsx. */
+@keyframes slide-out-right {
+  to {
+    opacity: 0;
+    transform: translateX(44px) scale(0.98);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+@keyframes slide-out-left {
+  to {
+    opacity: 0;
+    transform: translateX(-44px) scale(0.98);
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+}
+
+.animate-exit-approved {
+  overflow: hidden;
+  max-height: 120px;
+  animation: slide-out-right 420ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.animate-exit-rejected {
+  overflow: hidden;
+  max-height: 120px;
+  animation: slide-out-left 420ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+.animate-bar {
+  transform-origin: bottom;
+  animation: bar-grow 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tyre-spin,
+  .animate-fade-up,
+  .animate-pop,
+  .animate-overlay,
+  .animate-slide-down,
+  .inject-pulse,
+  .animate-exit-approved,
+  .animate-exit-rejected,
+  .animate-bar {
+    animation: none !important;
+  }
+}
