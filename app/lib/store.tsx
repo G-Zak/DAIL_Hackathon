@@ -10,6 +10,7 @@ import { urgencyScore } from "./priority";
 import { daysUntil, todayISO } from "./dates";
 import { quoteFor } from "./pricing";
 import { playNotificationSound } from "./sound";
+import { useSession } from "./session";
 import type {
   AppNotification,
   Availability,
@@ -156,6 +157,8 @@ export function useStore(): Store {
 }
 
 export function StoreProvider({ children }: { children: ReactNode }) {
+  const session = useSession();
+  const isCoordinator = session?.role === "coordinator";
   const [wheelSets, setWheelSets] = useState<WheelSet[]>(() => cloneSeedData().wheel_sets);
   const [availability, setAvailability] = useState<Availability[]>(() => cloneSeedData().availability);
   const [resolutions, setResolutions] = useState<Record<string, Resolution>>(() =>
@@ -245,9 +248,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         },
         ...prev,
       ]);
-      if (settings.soundEnabled) playNotificationSound(n.urgent ?? false);
+      // Only ring live when a coordinator is the one at the screen. If the alert
+      // is raised under the technician role, ArrivalChime announces it when the
+      // coordinator comes back.
+      if (settings.soundEnabled && isCoordinator) playNotificationSound(n.urgent ?? false);
     },
-    [settings.soundEnabled]
+    [settings.soundEnabled, isCoordinator]
   );
 
   const highlight = useCallback((id: string) => {

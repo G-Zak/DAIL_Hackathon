@@ -12,6 +12,14 @@
  */
 
 let ctx: AudioContext | null = null;
+let lastPlayedAt = 0;
+
+/**
+ * Two chimes inside this window would overlap into noise rather than read as two
+ * alerts. It also absorbs React's development double-invoke of mount effects, so
+ * an arrival announcement rings once either way.
+ */
+const MIN_GAP_MS = 350;
 
 function getContext(): AudioContext | null {
   if (typeof window === "undefined") return null;
@@ -49,6 +57,10 @@ function tone(audio: AudioContext, freq: number, startAt: number, duration: numb
  * rising notes, slightly louder, so it is distinguishable from routine traffic.
  */
 export function playNotificationSound(urgent = false) {
+  const now = Date.now();
+  if (now - lastPlayedAt < MIN_GAP_MS) return;
+  lastPlayedAt = now;
+
   const audio = getContext();
   if (!audio) return;
   try {

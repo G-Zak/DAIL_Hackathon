@@ -2,11 +2,11 @@
 
 import { useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { StoreProvider } from "@/lib/store";
 import { Sidebar } from "@/components/shell/Sidebar";
 import { Topbar } from "@/components/shell/Topbar";
 import { RecordModal } from "@/components/queue/RecordModal";
 import { Toaster } from "@/components/Toaster";
+import { ArrivalChime } from "@/components/ArrivalChime";
 
 const TITLES: Record<string, string> = {
   "/dashboard": "Dashboard",
@@ -21,7 +21,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <StoreProvider>
+    <>
       <div className="flex min-h-screen bg-[var(--color-nav)]">
         <Sidebar open={menuOpen} onClose={() => setMenuOpen(false)} />
         <div className="flex min-w-0 flex-1 flex-col bg-[var(--color-canvas)] lg:my-3 lg:mr-3 lg:rounded-3xl lg:overflow-hidden">
@@ -31,6 +31,7 @@ export default function AppLayout({ children }: { children: ReactNode }) {
       </div>
       <RecordModal />
       <Toaster />
-    </StoreProvider>
+      <ArrivalChime />
+    </>
   );
 }
