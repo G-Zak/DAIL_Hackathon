@@ -9,6 +9,7 @@ import { contactGate, unitsNeeded } from "./gating";
 import { urgencyScore } from "./priority";
 import { daysUntil, todayISO } from "./dates";
 import { quoteFor } from "./pricing";
+import { playNotificationSound } from "./sound";
 import type {
   AppNotification,
   Availability,
@@ -62,6 +63,7 @@ const DEFAULT_SETTINGS: Settings = {
   defaultChannel: "whatsapp",
   outreachWindowDays: 14,
   discountPct: 10,
+  soundEnabled: true,
   templates: cloneTemplates(),
 };
 
@@ -243,8 +245,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         },
         ...prev,
       ]);
+      if (settings.soundEnabled) playNotificationSound(n.urgent ?? false);
     },
-    []
+    [settings.soundEnabled]
   );
 
   const highlight = useCallback((id: string) => {

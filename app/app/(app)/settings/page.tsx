@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { RotateCcw, TriangleAlert } from "lucide-react";
+import { Play, RotateCcw, TriangleAlert, Volume2, VolumeX } from "lucide-react";
+import { playNotificationSound } from "@/lib/sound";
 import { useStore } from "@/lib/store";
 import { CHANNEL_LABEL, LANGUAGE_LABEL, TEMPLATE_TOKENS } from "@/lib/templates";
 import { DISCOUNT_OPTIONS, DEMO_PRICE_PER_TYRE_MAD, formatMAD } from "@/lib/pricing";
@@ -151,6 +152,42 @@ export default function SettingsPage() {
             </code>
           ))}
         </div>
+      </Card>
+
+      <Card
+        title="Notification sound"
+        subtitle="A chime when something lands in the notification centre — an urgent in-shop flag rings differently."
+      >
+        <div className="flex flex-wrap items-center gap-2">
+          <Segments
+            value={settings.soundEnabled ? "on" : "off"}
+            onChange={(v) => updateSettings({ soundEnabled: v === "on" })}
+            options={[
+              { value: "on", label: "On" },
+              { value: "off", label: "Muted" },
+            ]}
+          />
+          <button
+            onClick={() => playNotificationSound(false)}
+            className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--color-border-strong)] px-3 py-1.5 text-xs font-bold text-[var(--color-ink)] transition-colors hover:bg-[var(--color-panel-sunken)]"
+          >
+            <Play className="h-3.5 w-3.5" /> Test
+          </button>
+          <button
+            onClick={() => playNotificationSound(true)}
+            className="inline-flex items-center gap-1.5 rounded-xl border border-[var(--color-danger-border)] px-3 py-1.5 text-xs font-bold text-[var(--color-danger-ink)] transition-colors hover:bg-[var(--color-danger-bg)]"
+          >
+            <Play className="h-3.5 w-3.5" /> Test urgent
+          </button>
+          <span className="inline-flex items-center gap-1.5 text-xs text-[var(--color-ink-soft)]">
+            {settings.soundEnabled ? <Volume2 className="h-3.5 w-3.5" /> : <VolumeX className="h-3.5 w-3.5" />}
+            {settings.soundEnabled ? "Sound on" : "Muted"}
+          </span>
+        </div>
+        <p className="mt-2.5 text-[11px] leading-snug text-[var(--color-ink-faint)]">
+          Browsers only allow audio after you have interacted with the page, so the first chime
+          plays once you have clicked something — which, in this flow, you always have.
+        </p>
       </Card>
 
       <Card

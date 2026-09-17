@@ -1,6 +1,6 @@
 "use client";
 
-import { AlarmClock, Bell, CheckCheck, PackageCheck, Store, Wrench } from "lucide-react";
+import { AlarmClock, Bell, CheckCheck, PackageCheck, Store, Volume2, VolumeX, Wrench } from "lucide-react";
 import { useStore } from "@/lib/store";
 import type { AppNotification, NotificationKind } from "@/lib/types";
 
@@ -20,7 +20,8 @@ function timeAgo(ts: number): string {
 }
 
 export function NotificationCenter({ onClose }: { onClose: () => void }) {
-  const { notifications, markAllRead, markRead, openRecord, unreadCount } = useStore();
+  const { notifications, markAllRead, markRead, openRecord, unreadCount, settings, updateSettings } =
+    useStore();
 
   function handleClick(n: AppNotification) {
     markRead(n.id);
@@ -36,8 +37,20 @@ export function NotificationCenter({ onClose }: { onClose: () => void }) {
       style={{ boxShadow: "var(--shadow-pop)" }}
     >
       <div className="flex items-center justify-between border-b border-[var(--color-border)] px-3 py-2.5">
-        <p className="text-sm font-bold text-[var(--color-ink)]">
+        <p className="flex items-center gap-1.5 text-sm font-bold text-[var(--color-ink)]">
           Notifications{unreadCount > 0 && ` · ${unreadCount}`}
+          <button
+            onClick={() => updateSettings({ soundEnabled: !settings.soundEnabled })}
+            aria-label={settings.soundEnabled ? "Mute notification sound" : "Unmute notification sound"}
+            title={settings.soundEnabled ? "Sound on" : "Sound muted"}
+            className="rounded-md p-1 text-[var(--color-ink-faint)] transition-colors hover:bg-[var(--color-panel-sunken)]"
+          >
+            {settings.soundEnabled ? (
+              <Volume2 className="h-3.5 w-3.5" />
+            ) : (
+              <VolumeX className="h-3.5 w-3.5" />
+            )}
+          </button>
         </p>
         {notifications.length > 0 && (
           <button

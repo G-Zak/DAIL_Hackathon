@@ -147,6 +147,8 @@ export interface Settings {
   /** Only customers with an appointment inside this many days get stock-ready outreach. */
   outreachWindowDays: number;
   discountPct: number;
+  /** Play a chime when a new notification arrives. */
+  soundEnabled: boolean;
   templates: TemplateMap;
 }
 
