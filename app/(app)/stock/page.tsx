@@ -89,6 +89,7 @@ export default function StockPage() {
                 <th className="pb-2">Units</th>
                 <th className="pb-2">State</th>
                 <th className="pb-2">Waiting</th>
+                <th className="pb-2 text-right">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -115,6 +116,16 @@ export default function StockPage() {
                     </td>
                     <td className="py-2.5 text-[var(--color-ink-soft)]">
                       {need ? `${need.recordIds.length} flagged` : waitingCount ? `${waitingCount} blocked` : "—"}
+                    </td>
+                    <td className="py-2.5 text-right">
+                      {!a.confirmed && (
+                        <button
+                          onClick={() => applyStockConfirmed(a.id)}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-[var(--color-ready-border)] px-2.5 py-1.5 text-xs font-bold text-[var(--color-ready-ink)] transition-colors hover:bg-[var(--color-ready-bg)]"
+                        >
+                          <PackageCheck className="h-3.5 w-3.5" /> Confirm
+                        </button>
+                      )}
                     </td>
                   </tr>
                 );
